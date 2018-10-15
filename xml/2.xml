@@ -1,0 +1,5 @@
+<person>
+    <para name="sss" age="18"></para>
+    <desc>emmm</desc>
+    <id attr1="test1" attr2="test2">11</id>
+</person>
