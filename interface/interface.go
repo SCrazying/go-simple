@@ -61,7 +61,7 @@ func Show(this interface{}) {
 	//this.PrintName()
 }
 
-//重新实现String()
+//重新实现Stringer interface String()
 func (this Human) String() string {
 	age := strconv.Itoa(this.age)
 	return "name is " + this.name + ",age is " + age
