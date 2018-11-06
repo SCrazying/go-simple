@@ -1,0 +1,1 @@
+s=`ls | grep *.exe`echo $s
