@@ -4,6 +4,7 @@ import (
 	"encoding/xml"
 	"fmt"
 	"io/ioutil"
+	"log"
 )
 
 type XMLPerson struct {
@@ -60,7 +61,28 @@ func readxml(filepath string) string {
 	return ""
 }
 
+type Ui struct {
+	Name   string  `xml:"name,attr"`
+	Groups []Group `xml:"group"`
+}
+type Group struct {
+	XMLName xml.Name `xml:"xxxroup"`
+	Name    string   `xml:"name,attr"`
+	Id      string   `xml:"id,attr"`
+}
+
 func main() {
 	readxml("1.xml")
 	writexml("2.xml")
+
+	var ui Ui
+	ui.Name = "test"
+	ui.Groups = append(ui.Groups, Group{Name: "test", Id: "123"})
+	ui.Groups = append(ui.Groups, Group{Name: "11111", Id: "3213"})
+	bufer, err := xml.Marshal(ui)
+	if err != nil {
+
+		log.Fatalln("Marshal err", err)
+	}
+	fmt.Println(string(bufer))
 }
