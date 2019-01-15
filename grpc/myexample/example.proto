@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package myexample;
+
+
+
+service Login {
+  rpc DoLogin (LoginRequest) returns (LoginReply) {}
+}
+
+
+message LoginRequest{
+	string username = 1;
+	string password = 2;
+
+}
+
+message LoginReply{
+	string buffer = 1;
+	
+}
+
