@@ -1,0 +1,13 @@
+syntax = "proto3";
+package user;
+
+enum UserRole{
+    admin = 0;
+    normal = 1;
+}
+
+message user{
+    string username = 1;
+    string password = 2;
+    UserRole role = 3;
+}
