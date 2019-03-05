@@ -19,4 +19,25 @@ message LoginReply{
 	string buffer = 1;
 	
 }
+message RouteRequest{
+    int32 A = 1;
+    int32 B = 2;
+}
 
+message RouteReply{
+    int32 C = 1;
+}
+
+message RouterStream{
+    //这个是客户端来的数据
+    string recv = 1;
+    //这个用于发生到客户端
+    string send = 2;
+}
+
+service Router{
+    rpc c2s(RouteRequest)returns (RouteReply){}
+    rpc c2sstream(RouteRequest)returns (stream RouteReply){}
+    rpc cstream2S(stream  RouteRequest)returns (RouteReply){}
+    rpc cstream2Sstream(stream RouterStream)returns (stream RouterStream){}
+}
