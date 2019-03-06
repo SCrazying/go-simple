@@ -1,0 +1,18 @@
+//定义包名
+package Arith
+
+//指定protobuf语法版本
+syntax = "proto3";
+
+message Request {              
+
+}
+Message Reply{
+
+}
+
+Message myexample{
+    //rpc 
+}
+
+
