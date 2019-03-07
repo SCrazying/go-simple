@@ -2,29 +2,34 @@ package main
 
 import (
 	"context"
-	"fmt"
-	"go-simple/grpc/myexample"
-
-	"net"
-
+	pb "go-simple/grpc/myexample"
 	"google.golang.org/grpc"
+	"log"
+	"net"
 )
 
-const port = ":43211"
-
-type LoginServer struct {
+type ArithServer struct {
 }
 
-func (l *LoginServer) DoLogin(ctx context.Context, r *myexample.LoginRequest) (*myexample.LoginReply, error) {
-	return &myexample.LoginReply{Buffer: "test buffer"}, nil
+func (service *ArithServer) CalCircumference(ctx context.Context, req *pb.ArithRequest) (*pb.Arithreply, error) {
+	reply := &pb.Arithreply{}
+	reply.Circumference = (req.Width + req.Width) * 2
+	return reply, nil
 }
+
+const Host = ":2333"
+
 func main() {
-	lis, err := net.Listen("tcp", port)
-	if err != nil {
-		fmt.Println("list ", port, err)
-	}
+	//注册gRpc服务
 	s := grpc.NewServer()
-
-	myexample.RegisterLoginServer(s, &LoginServer{})
-	s.Serve(lis)
+	//服务监听
+	ser := &ArithServer{}
+	pb.RegisterArithServer(s, ser)
+	//创建监听端口
+	l, err := net.Listen("tcp", Host)
+	if err != nil {
+		log.Println(err)
+	}
+	//将rpc端口绑定到tcp 2333端口上
+	s.Serve(l)
 }

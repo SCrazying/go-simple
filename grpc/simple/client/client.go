@@ -2,32 +2,28 @@ package main
 
 import (
 	"context"
-	"go-simple/grpc/myexample"
+	"fmt"
+	pb "go-simple/grpc/myexample"
 	"log"
 
 	"google.golang.org/grpc"
 )
 
-const port = ":43211"
-
-const (
-	address = "localhost:43211"
-)
+const Host = ":2333"
 
 func main() {
-	conn, err := grpc.Dial(address, grpc.WithInsecure())
+	//建立rpc连接
+	conn, err := grpc.Dial(Host, grpc.WithInsecure())
 	if err != nil {
-		log.Fatal("did not connect: %v", err)
+		log.Fatalln(err)
 	}
 	defer conn.Close()
-	c := myexample.NewLoginClient(conn)
-	r, err := c.DoLogin(context.Background(), &myexample.LoginRequest{
-		Username: "xiaoming",
-		Password: "xiaoming",
-	})
+	//使用rpc客户端
+	c := pb.NewArithClient(conn)
+	//同步阻塞调用
+	reply, err := c.CalCircumference(context.Background(), &pb.ArithRequest{Width: 10, Height: 24})
 	if err != nil {
-		log.Fatal("could not greet: %v", err)
+		log.Fatalln(err)
 	}
-	log.Printf("%s", r.GetBuffer())
-
+	fmt.Printf("Circumference = %d\n", reply.Circumference)
 }

@@ -1,18 +1,53 @@
-//定义包名
-package Arith
-
 //指定protobuf语法版本
-syntax = "proto3";
+ syntax = "proto3";
+ //定义包名
+ package myexample;
 
-message Request {              
+ message ArithRequest {
+     int32 width = 1;
+     int32 height = 2;
+ }
 
+ message Arithreply{
+     int32 circumference = 1;
+ }
+
+ service Arith{
+     //rpc
+     rpc CalCircumference(ArithRequest) returns (Arithreply){}
+ }
+
+message CountRequest{
+    int32 num = 1;
 }
-Message Reply{
-
+message CountReply{
+    int32 total = 1;
+}
+service Count{
+  //rpc
+  rpc CalTotal(stream CountRequest) returns (CountReply){}
 }
 
-Message myexample{
-    //rpc 
+
+message FibonacciRequest{
+    int32 num = 1;
+}
+message FibonacciReply{
+    int32 ans = 1;
+}
+
+service Fibonacci{
+  //rpc
+  rpc CalFibonacci( FibonacciRequest) returns (stream FibonacciReply){}
 }
 
 
+message ChatRequest{
+    string data = 1;
+}
+message ChatReply{
+    string reply= 1;
+}
+service Chat{
+    rpc OnChat(stream ChatRequest)returns(stream ChatReply){}
+}
