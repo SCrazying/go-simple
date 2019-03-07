@@ -19,7 +19,7 @@ func main() {
 	}
 	defer conn.Close()
 	cl := pb.NewFibonacciClient(conn)
-	stream, err := cl.CalFibonacci(context.Background(), &pb.FibonacciRequest{Num: 100})
+	stream, err := cl.CalFibonacci(context.Background(), &pb.FibonacciRequest{Num: 10})
 	if err != nil {
 		log.Fatalln(err)
 	}

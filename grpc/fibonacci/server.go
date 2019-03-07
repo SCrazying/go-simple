@@ -11,24 +11,32 @@ import (
 //这个服务用于来自客户端的num ，并且返回递归返回结果
 type FibonacciServer struct{}
 
+//使用闭包的形式来计算fibonacci
 func Fibonacci() func() int32 {
+
+	//缓存数据
+	var sum int32 = 0
 	var a int32 = 0
 	var b int32 = 1
-	var sum int32 = 0
 	return func() int32 {
-		sum = a
+		sum = a + b
 		a = b
-		b = a + sum
+		b = sum
 		return sum
 	}
 }
 
 func (s *FibonacciServer) CalFibonacci(request *pb.FibonacciRequest, stream pb.Fibonacci_CalFibonacciServer) error {
 
-	var total = int(request.Num)
-	for i := 0; i <= total; i++ {
-		f := Fibonacci()
-		stream.SendMsg(&pb.FibonacciReply{Ans: f()})
+	var total = int32(request.Num)
+	f := Fibonacci()
+	for i := int32(0); i <= total; i++ {
+		if i == 0 || i == 1 {
+			stream.SendMsg(&pb.FibonacciReply{Ans: i})
+		} else {
+			stream.SendMsg(&pb.FibonacciReply{Ans: f()})
+		}
+
 	}
 	return nil
 }
