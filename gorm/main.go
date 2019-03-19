@@ -12,5 +12,7 @@ func main() {
 	router.GET("/reader/:id/", control.ReaderInfo)
 	router.GET("/reader", control.ReadersInfo)
 	router.PUT("/reader/:id/password/:password", control.UpdatePasswordById)
+	router.PUT("/reader/:id/name/:name", control.UpdateNameById)
+	router.POST("/reader/", control.RegisterReader)
 	router.Run(":2333")
 }

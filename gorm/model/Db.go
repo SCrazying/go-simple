@@ -10,7 +10,7 @@ var Db *gorm.DB
 
 func init() {
 
-	db, err := gorm.Open("mysql", "root:123456@(192.168.0.16:3306)/library?charset=utf8&parseTime=True&loc=Local")
+	db, err := gorm.Open("mysql", "root:123456@(192.168.2.33:3306)/library?charset=utf8&parseTime=True&loc=Local")
 	if err != nil {
 		fmt.Println("数据库连接失败 ", err)
 		panic(err)

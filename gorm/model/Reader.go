@@ -42,14 +42,22 @@ func FindReaderInfo(id int) *Reader {
 }
 
 //更新用户名
-func UpdateReaderName(id int, reader *Reader) {
-	Db.Update()
+func UpdateReaderName(id int, name string) *Reader {
+	reader := &Reader{}
+	flag := Db.Where("id=?", id).Find(&reader).RecordNotFound()
+	if flag {
+		return nil
+	}
+
+	Db.Model(reader).Update("name", name)
+
+	return reader
 }
 
 //更新用户密码
 func UpdateReaderPassword(id int, password string) *Reader {
 	reader := &Reader{}
-	flag := Db.First(&reader).RecordNotFound()
+	flag := Db.Where("id=?", id).Find(&reader).RecordNotFound()
 	if flag {
 		return nil
 	}
@@ -61,6 +69,19 @@ func UpdateReaderPassword(id int, password string) *Reader {
 }
 
 //插入用户
-func InsertReaderInfo(reader, name, sex string) {
+func InsertReaderInfo(name, password, sex string) *Reader {
+	reader := Reader{Name: name, Password: password, Sex: sex}
 
+	flag := Db.NewRecord(reader)
+	if flag {
+		Db.Create(&reader)
+		flag = Db.NewRecord(reader)
+		if !flag {
+			return &reader
+		} else {
+			return nil
+		}
+	} else {
+		return nil
+	}
 }
