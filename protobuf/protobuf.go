@@ -15,7 +15,6 @@ func main() {
 	}
 
 	in_data, err := proto.Marshal(msg_request)
-	fmt.Println(string(in_data))
 	if err != nil {
 		fmt.Println("Marshal err :", err)
 	}
