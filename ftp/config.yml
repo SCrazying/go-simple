@@ -1,0 +1,22 @@
+#刷新Ftp间隔时间,代表多少秒重新获取一次数据
+scan: 10000
+#服务器ftp路径，比如  ftp://127.0.0.1//test/
+ftppath : /FMItoNSO/
+#下载到本地的文件目录主要用作缓存，比如说：将文件xxxx.dat下载到 temppath下，
+#首先将文件按照xxxx.dat.temp下载到本地，然后拷贝到需要使用的位置
+temppath : D:/GOPATH/src/FtpGen/temp/
+#真实的位置
+localpath : D:/GOPATH/src/FtpGen/new/
+#ip地址
+ftpserverip: 127.0.0.1
+#端口默认21
+ftpserverport: 21
+#用户名
+ftpservername: test
+#密码
+ftpserverpassword: test
+#是否开启筛选
+suffflag : true
+#按文件名进行筛选
+suff : aa,aa,bb
+
