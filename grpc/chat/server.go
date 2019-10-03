@@ -6,16 +6,12 @@ import (
 	"google.golang.org/grpc"
 	"log"
 	"net"
-	"sync"
 )
 
 type CharServer struct{}
 
-var lock sync.Mutex
-
 func (s *CharServer) OnChat(stream pb.Chat_OnChatServer) error {
-	lock.Lock()
-	defer lock.Unlock()
+
 	ctx := stream.Context()
 	select {
 	case <-ctx.Done():
